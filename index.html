@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Site web pour petits entrepreneurs — échange sur TikTok</title>
+  <meta name="description" content="Indépendants, commerçants, artisans : je fais le site web. On échange en message privé sur TikTok, en projet payant ou en troc.">
+  <meta name="theme-color" content="#efe6d6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23161311'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23efe6d6'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #efe6d6;
+      --ink: #1c1712;
+      --muted: #5c5348;
+      --line: #ddcfb8;
+      --card: #fffaf3;
+      --dark: #161311;
+      --dark-muted: #d5c7b4;
+      --teal: #0f6e62;
+      --danger: #ffb4c0;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Outfit, "Segoe UI", sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 560;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+    }
+
+    a { color: inherit; }
+
+    .skip {
+      position: absolute;
+      left: 12px;
+      top: -40px;
+      background: var(--dark);
+      color: #fff;
+      padding: 8px 12px;
+      z-index: 5;
+    }
+
+    .skip:focus { top: 12px; }
+
+    .wrap {
+      width: min(1080px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .top-link {
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 2px;
+    }
+
+    .hero { padding: 48px 0 28px; }
+
+    .hero-grid {
+      display: grid;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .kicker {
+      margin: 0 0 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+    }
+
+    .lead {
+      max-width: 38rem;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .hero-actions, .row-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-dark { background: var(--dark); color: #f6f1e8; }
+    .btn-ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+    .btn-line { background: transparent; border-color: #f6f1e8; color: #f6f1e8; }
+    .btn-light { background: #f6f1e8; color: var(--dark); }
+    .btn[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+
+    .phone {
+      background: var(--dark);
+      color: #f6f1e8;
+      border-radius: 28px;
+      padding: 16px 14px 18px;
+      box-shadow: 0 24px 50px rgba(28, 23, 18, 0.16);
+    }
+
+    .phone-bar {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dark-muted);
+      margin-bottom: 14px;
+    }
+
+    .bubble {
+      background: #2a241f;
+      border-radius: 16px 16px 16px 4px;
+      padding: 14px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      min-height: 140px;
+      font-size: 0.95rem;
+    }
+
+    section { padding: 28px 0; }
+
+    h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 8px; }
+
+    .section-lead { margin-top: 0; color: var(--muted); max-width: 40rem; }
+
+    .who, .offers {
+      list-style: none;
+      padding: 0;
+      margin: 22px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .who li, .offers li, .faq details {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+
+    .who span {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .who strong, .offers h3 { display: block; font-size: 1.25rem; margin: 4px 0; }
+    .who p, .offers p { margin: 0; color: var(--muted); }
+
+    .exchange {
+      background: var(--dark);
+      color: #f6f1e8;
+      border-radius: 28px;
+      padding: 22px 18px 20px;
+    }
+
+    .exchange .section-lead { color: var(--dark-muted); }
+
+    .exchange-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    form { display: grid; gap: 14px; }
+
+    .split { display: grid; gap: 14px; }
+
+    label, .field {
+      display: grid;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    fieldset {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    legend { font-weight: 600; padding: 0; }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      background: #241f1b;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      font: inherit;
+      color: var(--ink);
+      background: var(--card);
+      color-scheme: light;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    .error {
+      min-height: 1.1em;
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .hint { color: var(--dark-muted); font-weight: 400; font-size: 0.85rem; }
+
+    #status {
+      min-height: 1.4em;
+      margin: 8px 0 0;
+      color: #f6f1e8;
+    }
+
+    .faq details + details { margin-top: 10px; }
+    .faq summary { cursor: pointer; font-weight: 600; }
+    .faq p { margin: 10px 0 0; color: var(--muted); }
+
+    footer {
+      padding: 10px 0 48px;
+      color: var(--muted);
+    }
+
+    footer details {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    @media (min-width: 720px) {
+      .split { grid-template-columns: 1fr 1fr; }
+      .who { grid-template-columns: 1fr 1fr 1fr; }
+      .offers { grid-template-columns: 1fr 1fr 1fr; }
+      .exchange { padding: 32px; }
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid { grid-template-columns: 1.15fr 0.85fr; }
+      .exchange-grid { grid-template-columns: 1.1fr 0.9fr; align-items: start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#echange">Aller à l'échange</a>
+  <header class="wrap top">
+    <p class="brand">Sites pour indépendants</p>
+    <a class="top-link" id="headerTiktok" href="#config">TikTok</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="kicker">Petits entrepreneurs</p>
+          <h1>Il te faut un site. On échange sur TikTok.</h1>
+          <p class="lead">Commerces, artisans, coachs, food : je construis un site clair. Tu décris l'activité ici, le message part en privé sur TikTok. Projet payant ou échange, on le dit tout de suite.</p>
+          <div class="hero-actions">
+            <a class="btn btn-dark" id="heroTiktok" href="#echange">Écrire sur TikTok</a>
+            <a class="btn btn-ghost" href="#echange">Préparer le message</a>
+          </div>
+        </div>
+        <div class="phone">
+          <div class="phone-bar"><span>Exemple</span><span>TikTok</span></div>
+          <div class="bubble" id="phoneText">Salut, je m'appelle Léa.
+Je fais : fleuriste, à Lyon.
+Je cherche : un site vitrine.
+On échange ici ?</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Pour qui</h2>
+        <p class="section-lead">Je cherche des petites activités qui veulent un site, pas une usine à gaz.</p>
+        <ol class="who">
+          <li><span>01</span><strong>Commerce</strong><p>Boutique, salon, cabinet, atelier.</p></li>
+          <li><span>02</span><strong>Artisan</strong><p>Un endroit pour montrer le travail et être joint.</p></li>
+          <li><span>03</span><strong>Food</strong><p>Restaurant, food truck, traiteur, carte et horaires.</p></li>
+          <li><span>04</span><strong>Coach</strong><p>Une page pour expliquer l'offre et prendre des demandes.</p></li>
+          <li><span>05</span><strong>Service local</strong><p>Ménage, réparation, cours, soins.</p></li>
+          <li><span>06</span><strong>Déjà en ligne</strong><p>Un site vieux ou bricolé, à remettre d'aplomb.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2>Ce que je fais</h2>
+        <p class="section-lead">Trois formats. Le détail se règle dans la conversation TikTok.</p>
+        <ul class="offers">
+          <li>
+            <h3>Site vitrine</h3>
+            <p>Une page : qui tu es, ce que tu proposes, comment te joindre.</p>
+          </li>
+          <li>
+            <h3>Réservation</h3>
+            <p>Un bouton pour prendre rendez-vous ou passer une commande simple.</p>
+          </li>
+          <li>
+            <h3>Petite boutique</h3>
+            <p>Quelques produits, sans usine. Ou une refonte de l'existant.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="echange">
+      <div class="wrap">
+        <div class="exchange">
+          <h2>L'échange</h2>
+          <p class="section-lead">Le texte reste sur cette page, puis tu le colles dans TikTok. Rien n'est envoyé à un serveur.</p>
+          <div class="exchange-grid">
+            <form id="deal" novalidate>
+              <div class="split">
+                <div class="field">
+                  <label for="prenom">Prénom</label>
+                  <input id="prenom" name="prenom" type="text" maxlength="40" autocomplete="given-name" required>
+                  <span class="error" id="err-prenom"></span>
+                </div>
+                <div class="field">
+                  <label for="ville">Ville <span class="hint">(facultatif)</span></label>
+                  <input id="ville" name="ville" type="text" maxlength="60" autocomplete="address-level2">
+                  <span class="error" id="err-ville"></span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="activite">Ton activité</label>
+                <input id="activite" name="activite" type="text" maxlength="80" placeholder="Boulangerie, coach sportif, fleuriste…" required>
+                <span class="error" id="err-activite"></span>
+              </div>
+              <div class="field">
+                <label for="besoin">Ce qu'il te faut</label>
+                <select id="besoin" name="besoin" required>
+                  <option value="">Choisir</option>
+                  <option>Un site vitrine</option>
+                  <option>Une prise de rendez-vous ou de commande</option>
+                  <option>Une petite boutique</option>
+                  <option>Une refonte de mon site</option>
+                  <option>Je ne sais pas encore</option>
+                </select>
+                <span class="error" id="err-besoin"></span>
+              </div>
+              <fieldset>
+                <legend>Comment on travaille</legend>
+                <label class="choice"><input type="radio" name="mode" value="payant" checked> Projet payant, sur devis</label>
+                <label class="choice"><input type="radio" name="mode" value="echange"> Échange (troc)</label>
+              </fieldset>
+              <div class="field" id="trocField" hidden>
+                <label for="troc">Ce que tu proposes en échange</label>
+                <input id="troc" name="troc" type="text" maxlength="240" placeholder="Visibilité, produit, prestation…">
+                <span class="error" id="err-troc"></span>
+              </div>
+              <div class="field">
+                <label for="note">Précision <span class="hint">(facultatif, 400 caractères)</span></label>
+                <textarea id="note" name="note" maxlength="400" rows="4"></textarea>
+                <span class="hint" id="noteCount">0 / 400</span>
+                <span class="error" id="err-note"></span>
+              </div>
+              <div class="row-actions">
+                <button class="btn btn-light" id="submitBtn" type="submit">Copier et ouvrir TikTok</button>
+              </div>
+            </form>
+            <div>
+              <label for="out">Message à coller sur TikTok</label>
+              <textarea id="out" readonly rows="10" placeholder="Le message s'écrit ici pendant que tu remplis le formulaire."></textarea>
+              <div class="row-actions" style="margin-top: 10px">
+                <button class="btn btn-line" id="copyBtn" type="button">Copier</button>
+                <a class="btn btn-light" id="openTiktok" href="#config" aria-disabled="true">Ouvrir TikTok</a>
+              </div>
+              <p id="status" role="status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <div class="wrap">
+        <h2>Questions</h2>
+        <details>
+          <summary>C'est payant ?</summary>
+          <p>Sur devis, dit dans la conversation. Tu peux aussi proposer un échange si les deux côtés sont d'accord.</p>
+        </details>
+        <details>
+          <summary>Pourquoi TikTok ?</summary>
+          <p>C'est là que l'échange se fait : un message privé, puis on cadre le site. Il te faut un compte TikTok pour écrire.</p>
+        </details>
+        <details>
+          <summary>Le formulaire envoie mes infos quelque part ?</summary>
+          <p>Non. Tout reste dans ton navigateur. Tu copies le texte et tu le colles toi-même sur TikTok.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <details id="config">
+      <summary>Brancher le compte TikTok (pour publier cette page)</summary>
+      <ol>
+        <li>Ouvre <code>index.html</code>.</li>
+        <li>Cherche <code>TIKTOK_USER</code>.</li>
+        <li>Remplace <code>TONCOMPTE</code> par le pseudo, sans @.</li>
+      </ol>
+      <p>Pour tester sans modifier le fichier, ajoute <code>?u=tonpseudo</code> à l'adresse.</p>
+    </details>
+  </footer>
+
+  <noscript>
+    <p class="wrap">Active JavaScript pour préparer le message, ou ouvre TikTok et écris le besoin à la main.</p>
+  </noscript>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /** Pseudo TikTok sans @. Exemple : const TIKTOK_USER = "atelier.web"; */
+      var TIKTOK_USER = "TONCOMPTE";
+      var USER_RE = /^[A-Za-z0-9._]{2,24}$/;
+      var LIMITS = { prenom: 40, ville: 60, activite: 80, besoin: 80, troc: 240, note: 400, message: 900 };
+
+      var form = document.getElementById("deal");
+      var out = document.getElementById("out");
+      var status = document.getElementById("status");
+      var phoneText = document.getElementById("phoneText");
+      var trocField = document.getElementById("trocField");
+      var note = document.getElementById("note");
+      var noteCount = document.getElementById("noteCount");
+      var openTiktok = document.getElementById("openTiktok");
+      var headerTiktok = document.getElementById("headerTiktok");
+      var heroTiktok = document.getElementById("heroTiktok");
+      var config = document.getElementById("config");
+      var example = phoneText ? phoneText.textContent : "";
+
+      function setStatus(message) {
+        if (status) status.textContent = message;
+      }
+
+      function cleanLine(value, max) {
+        return String(value == null ? "" : value)
+          .replace(/[\u0000-\u001F\u007F]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim()
+          .slice(0, max);
+      }
+
+      function cleanBlock(value, max) {
+        return String(value == null ? "" : value)
+          .replace(/[^\S\n]+/g, " ")
+          .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+          .trim()
+          .slice(0, max);
+      }
+
+      function resolveUser() {
+        var params;
+        try {
+          params = new URLSearchParams(window.location.search);
+        } catch (err) {
+          params = null;
+        }
+        var fromQuery = params ? params.get("u") : "";
+        var raw = fromQuery && String(fromQuery).trim() ? String(fromQuery) : TIKTOK_USER;
+        var user = String(raw).trim().replace(/^@+/, "").slice(0, 24);
+        if (!USER_RE.test(user) || user.toUpperCase() === "TONCOMPTE") return "";
+        return user;
+      }
+
+      function profileUrl(user) {
+        return "https://www.tiktok.com/@" + encodeURIComponent(user);
+      }
+
+      function modeValue() {
+        var picked = form ? form.querySelector('input[name="mode"]:checked') : null;
+        return picked && picked.value === "echange" ? "echange" : "payant";
+      }
+
+      function readFields() {
+        return {
+          prenom: cleanLine(form.prenom.value, LIMITS.prenom),
+          ville: cleanLine(form.ville.value, LIMITS.ville),
+          activite: cleanLine(form.activite.value, LIMITS.activite),
+          besoin: cleanLine(form.besoin.value, LIMITS.besoin),
+          troc: cleanLine(form.troc.value, LIMITS.troc),
+          note: cleanBlock(form.note.value, LIMITS.note),
+          mode: modeValue()
+        };
+      }
+
+      function buildMessage(data) {
+        var lines = [];
+        lines.push(data.prenom ? "Salut, je m'appelle " + data.prenom + "." : "Salut,");
+        if (data.activite && data.ville) lines.push("Je fais : " + data.activite + ", à " + data.ville + ".");
+        else if (data.activite) lines.push("Je fais : " + data.activite + ".");
+        if (data.besoin) lines.push("Je cherche : " + data.besoin + ".");
+        if (data.mode === "echange") {
+          lines.push(data.troc ? "Je propose un échange : " + data.troc + "." : "Je propose un échange.");
+        } else {
+          lines.push("Projet payant, sur devis.");
+        }
+        if (data.note) lines.push(data.note);
+        lines.push("On échange ici ?");
+        return lines.join("\n").slice(0, LIMITS.message);
+      }
+
+      function setError(id, message) {
+        var node = document.getElementById(id);
+        if (node) node.textContent = message || "";
+      }
+
+      function clearErrors() {
+        ["err-prenom", "err-activite", "err-ville", "err-besoin", "err-troc", "err-note"].forEach(function (id) {
+          setError(id, "");
+        });
+      }
+
+      function validate(data) {
+        clearErrors();
+        var ok = true;
+        if (!data.prenom) {
+          setError("err-prenom", "Indique un prénom.");
+          ok = false;
+        }
+        if (!data.activite) {
+          setError("err-activite", "Indique l'activité.");
+          ok = false;
+        }
+        if (!data.besoin) {
+          setError("err-besoin", "Choisis un besoin.");
+          ok = false;
+        }
+        if (data.mode === "echange" && !data.troc) {
+          setError("err-troc", "Dis ce que tu proposes en échange.");
+          ok = false;
+        }
+        return ok;
+      }
+
+      function paint(data) {
+        var started = data.prenom || data.activite || data.ville || data.besoin || data.note || data.troc;
+        var message = started ? buildMessage(data) : "";
+        if (out) out.value = message;
+        if (phoneText) phoneText.textContent = message || example;
+        if (noteCount && note) noteCount.textContent = String(note.value.length) + " / " + String(LIMITS.note);
+      }
+
+      function syncTroc() {
+        var exchange = modeValue() === "echange";
+        if (!trocField) return;
+        trocField.hidden = !exchange;
+        form.troc.required = exchange;
+        if (!exchange) setError("err-troc", "");
+      }
+
+      function applyUser(user) {
+        var url = user ? profileUrl(user) : "";
+        if (headerTiktok) {
+          headerTiktok.textContent = user ? "@" + user : "TikTok";
+          headerTiktok.href = user ? url : "#config";
+          if (user) {
+            headerTiktok.target = "_blank";
+            headerTiktok.rel = "noopener noreferrer";
+          }
+        }
+        if (heroTiktok) {
+          heroTiktok.href = user ? url : "#echange";
+          if (user) {
+            heroTiktok.target = "_blank";
+            heroTiktok.rel = "noopener noreferrer";
+          }
+        }
+        if (openTiktok) {
+          openTiktok.textContent = user ? "Ouvrir @" + user : "Ouvrir TikTok";
+          if (user) {
+            openTiktok.href = url;
+            openTiktok.target = "_blank";
+            openTiktok.rel = "noopener noreferrer";
+            openTiktok.removeAttribute("aria-disabled");
+          } else {
+            openTiktok.href = "#config";
+            openTiktok.removeAttribute("target");
+            openTiktok.setAttribute("aria-disabled", "true");
+          }
+        }
+        if (!user && config) config.open = true;
+      }
+
+      async function copyText(text) {
+        if (!text) return false;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+        } catch (err) {
+          /* sélection manuelle en secours */
+        }
+        if (!out) return false;
+        out.removeAttribute("readonly");
+        out.focus();
+        out.select();
+        var ok = false;
+        try {
+          ok = document.execCommand("copy");
+        } catch (err) {
+          ok = false;
+        }
+        out.setAttribute("readonly", "readonly");
+        return ok;
+      }
+
+      function boot() {
+        if (!form || !out) {
+          setStatus("Le formulaire est introuvable dans la page.");
+          return;
+        }
+        var user = resolveUser();
+        applyUser(user);
+        syncTroc();
+        paint(readFields());
+
+        form.addEventListener("input", function () {
+          syncTroc();
+          paint(readFields());
+        });
+
+        form.addEventListener("change", function () {
+          syncTroc();
+          paint(readFields());
+        });
+
+        var copyBtn = document.getElementById("copyBtn");
+        if (!copyBtn) {
+          setStatus("Le bouton Copier est introuvable.");
+          return;
+        }
+        copyBtn.addEventListener("click", async function () {
+          var data = readFields();
+          paint(data);
+          if (!out.value) {
+            setStatus("Remplis au moins le prénom ou l'activité.");
+            return;
+          }
+          var copied = await copyText(out.value);
+          setStatus(copied ? "Message copié." : "Copie bloquée. Sélectionne le message et copie-le à la main.");
+        });
+
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          var data = readFields();
+          paint(data);
+          if (!validate(data)) {
+            setStatus("Il manque une information.");
+            return;
+          }
+          var copied = await copyText(out.value);
+          if (!user) {
+            if (config) config.open = true;
+            setStatus(copied
+              ? "Message copié. Le lien TikTok n'est pas branché : remplace TONCOMPTE dans index.html."
+              : "Message prêt dans le cadre. Branche le pseudo TikTok dans index.html, ligne TIKTOK_USER.");
+            return;
+          }
+          var popup = null;
+          try {
+            popup = window.open(profileUrl(user), "_blank", "noopener,noreferrer");
+          } catch (err) {
+            popup = null;
+          }
+          if (copied && popup) {
+            setStatus("Message copié. TikTok est ouvert : colle-le en message privé.");
+          } else if (copied) {
+            setStatus("Message copié. La fenêtre a été bloquée : utilise Ouvrir @" + user + ".");
+          } else {
+            setStatus("Sélectionne le message, copie-le, puis ouvre @" + user + ".");
+          }
+        });
+      }
+
+      try {
+        boot();
+      } catch (err) {
+        setStatus("La page n'a pas pu démarrer. Recharge-la.");
+      }
+    })();
+  </script>
+</body>
+</html>
