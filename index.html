@@ -731,12 +731,21 @@ On échange ici ?</div>
           }
           var popup = null;
           try {
-            popup = window.open(profileUrl(user), "_blank", "noopener,noreferrer");
+            popup = window.open(profileUrl(user), "_blank");
           } catch (err) {
             popup = null;
           }
-          if (copied && popup) {
+          if (popup) {
+            try {
+              popup.opener = null;
+            } catch (err) {
+              /* fenêtre déjà isolée */
+            }
+          }
+          if (popup && copied) {
             setStatus("Message copié. TikTok est ouvert : colle-le en message privé.");
+          } else if (popup) {
+            setStatus("TikTok est ouvert. La copie auto a échoué : sélectionne le message et colle-le.");
           } else if (copied) {
             setStatus("Message copié. La fenêtre a été bloquée : utilise Ouvrir @" + user + ".");
           } else {
